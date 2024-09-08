@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css"> <!--Aqui é referenciado o CSS, codigo do CSS foi feito pela imersão do Alura-->
+    <title>RM Viagens Ivinhema</title>
+</head>
+<body>
+    <header>
+        <h1>RM Viagens Ivinhema</h1>
+        <h2>Busca de passagens e horários saindo de IVINHEMA-MS</h2>
+    </header>
+    <main>
+        <section>
+        <input type="search" placeholder="Digite o seu destino" id="campo-pesquisa"> <!--Parte da busca-->
+        <button onclick="pesquisar()">Buscar</button> <!--Botão-->
+        </section>
+        <section class="resultados-pesquisa" id="resultados-pesquisa"> <!--Deixa mais estilisado a parte a baixo-->      
+        </section>
+    </main>
+    <footer>
+        <p>2024 - Diago Mendes/RM Viagens - Todos os direitos reservados</p>
+    </footer>
+    <script src="dados.js"></script> <!--o javascript sempre ira vim aqui-->
+    <script src="app.js"></script> 
+</body>
+</html>
