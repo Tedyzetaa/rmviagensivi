@@ -54,12 +54,17 @@ section button {
 }
 
 /* Estiliza a letras de titulo */
-h1 {
-    font-size: 3rem; /* Aumenta o tamanho do h1 para maior destaque */
-    font-weight: 700; /* Torna o h1 em negrito */
-    margin-bottom: 1rem; /* Adiciona espaço abaixo do h1 */
+@media (max-width: 768px) { /* Para telas menores que 768px */
+    h1 {
+        font-size: 2.5rem; 
+    }
 }
 
+@media (max-width: 480px) { /* Para telas menores que 480px */
+    h1 {
+        font-size: 2rem; 
+    }
+}
 h2 {
     font-size: 1.8rem; /* Diminui o tamanho do h2 para um subtítulo */
     font-weight: 500; /* Um pouco menos de destaque que o h1 */
