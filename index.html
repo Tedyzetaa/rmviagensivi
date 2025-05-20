@@ -1,30 +1,54 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css"> <!--Aqui é referenciado o CSS, codigo do CSS foi feito pela imersão do Alura-->
-    <title>RM Viagens - Motta Linhas</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RM Viagens – Motta Linhas</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <header>
-        <h1>RM Viagens</h1>
-        <h2>Busca de Linhas da Motta/Total</h2>
-        <h3>Todos os ônibus podem ocorrer atrasos, cancelamentos ou alterações de horário, dependendo do dia</h3>
-        <h4>Deve-se atentar linhas que constam nesse sistema, pois pode haver atrasos nos onibus, assim prejudicando os passageiros que iram fazer baldeação</h4>
-    </header>
-    <main>
-        <section>
-        <input type="search" placeholder="Digite o nome da cidade" id="campo-pesquisa"> <!--Parte da busca-->
-        <button onclick="pesquisar()">Buscar</button> <!--Botão-->
-        </section>
-        <section class="resultados-pesquisa" id="resultados-pesquisa"> <!--Deixa mais estilisado a parte a baixo-->      
-        </section>
-    </main>
-    <footer>
-        <p>2024 - Diago Mendes - Todos os direitos reservados</p>
-    </footer>
-    <script src="dados.js"></script> <!--o javascript sempre ira vim aqui-->
-    <script src="app.js"></script> 
+
+  <header class="site-header">
+    <h1 class="site-header__title">RM Viagens</h1>
+    <h2 class="site-header__subtitle">Busca de Linhas da Motta/Total</h2>
+    <p class="site-header__alerta">Atenção a possíveis atrasos ou alterações de horário.</p>
+    <nav class="site-nav" aria-label="Navegação principal">
+      <!-- links futuros -->
+    </nav>
+  </header>
+
+  <main class="main-content">
+    <section class="busca" aria-labelledby="busca-label">
+      <label id="busca-label" for="campo-pesquisa" class="busca__label">Busque por cidade:</label>
+      <div class="busca__controls">
+        <input
+          id="campo-pesquisa"
+          class="busca__input"
+          type="search"
+          placeholder="Digite o nome da cidade"
+          aria-describedby="feedback-msg"
+        >
+        <button
+          class="busca__button"
+          aria-label="Iniciar busca"
+        >Buscar</button>
+      </div>
+      <div id="spinner" class="busca__spinner" aria-hidden="true"></div>
+      <p id="feedback-msg" class="busca__feedback" aria-live="polite"></p>
+    </section>
+
+    <section class="resultados" id="resultados-pesquisa" role="region" aria-live="polite">
+      <ul class="resultados__list">
+        <!-- resultados serão inseridos aqui -->
+      </ul>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>© 2024 Diago Mendes. Todos os direitos reservados.</p>
+  </footer>
+
+  <script src="dados.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>

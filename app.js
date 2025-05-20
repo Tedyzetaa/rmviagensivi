@@ -1,52 +1,54 @@
-function pesquisar() {
-    // Obtém a seção onde os resultados da pesquisa serão exibidos
-    let section = document.getElementById("resultados-pesquisa"); 
-  
-    // Obtém o valor digitado no campo de pesquisa e remove espaços em branco
-    let campoPesquisa = document.getElementById("campo-pesquisa").value.trim();
-  
-    // Verifica se o campo de pesquisa está vazio e exibe uma mensagem caso esteja
-    if (!campoPesquisa) {
-      section.innerHTML = "Não foi encontrado";
-      return; 
-    }
-  
-    // Converte o termo de pesquisa para letras minúsculas para uma busca sem distinção entre maiúsculas e minúsculas
-    campoPesquisa = campoPesquisa.toLowerCase();
-  
-    // Inicializa variáveis para armazenar os resultados, título, descrição e tags
-    let resultados = "";
-    let titulo = "";
-    let descricao = "";
-    let tags = "";
-  
-    // Itera sobre os dados da pesquisa
-    for (let dado of dados) { 
-      // Converte título, descrição e tags para minúsculas para comparação
-      titulo = dado.titulo.toLowerCase();
-      descricao = dado.descricao.toLowerCase();
-      tags = dado.tags.toLowerCase();
-  
-      // Verifica se o termo de pesquisa está presente no título, descrição ou tags
-      if (titulo.includes(campoPesquisa) || descricao.includes(campoPesquisa) || tags.includes(campoPesquisa)) {
-        // Adiciona o resultado encontrado à variável 'resultados'
-        resultados += `
-          <div class="item-resultado">
-            <h2>
-              <a href="#" target="_blank">${dado.titulo}</a> 
-            </h2>
-            <p class="descricao-meta">${dado.descricao} </p>
-            <a href=${dado.link} target="_blank">Mais Informações</a>
-          </div>
+const campo = document.getElementById('campo-pesquisa');
+const button = document.querySelector('.busca__button');
+const lista = document.querySelector('.resultados__list');
+const feedback = document.getElementById('feedback-msg');
+const spinner = document.getElementById('spinner');
+
+let debounceTimer;
+
+button.addEventListener('click', pesquisar);
+campo.addEventListener('input', () => {
+  clearTimeout(debounceTimer);
+  debounceTimer = setTimeout(pesquisar, 300);
+});
+
+async function pesquisar() {
+  const termo = campo.value.trim().toLowerCase();
+  lista.innerHTML = '';
+  feedback.textContent = '';
+  if (!termo) {
+    feedback.textContent = 'Por favor, digite algo para buscar.';
+    return;
+  }
+
+  spinner.style.display = 'block';
+  try {
+    await new Promise(r => setTimeout(r, 500)); // Simula latência
+
+    const encontrados = dados.filter(d =>
+      d.titulo.toLowerCase().includes(termo) ||
+      d.descricao.toLowerCase().includes(termo) ||
+      d.tags.toLowerCase().includes(termo)
+    );
+
+    if (encontrados.length === 0) {
+      feedback.textContent = 'Nenhum resultado encontrado.';
+    } else {
+      for (const dado of encontrados) {
+        const item = document.createElement('li');
+        item.className = 'resultados__item';
+        item.innerHTML = `
+          <h2 class="resultados__titulo">${dado.titulo}</h2>
+          <p class="resultados__descricao">${dado.descricao}</p>
+          <a href="${dado.link}" target="_blank" class="resultados__link">Mais informações</a>
         `;
+        lista.appendChild(item);
       }
     }
-  
-    // Verifica se algum resultado foi encontrado e exibe uma mensagem caso contrário
-    if (!resultados) {
-      resultados = "<p>Não foi encontrado</p>";
-    }
-  
-    // Atualiza o conteúdo da seção com os resultados da pesquisa
-    section.innerHTML = resultados;
+  } catch (err) {
+    feedback.textContent = 'Ocorreu um erro. Tente novamente.';
+    console.error(err);
+  } finally {
+    spinner.style.display = 'none';
   }
+}
